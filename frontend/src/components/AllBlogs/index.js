@@ -1,32 +1,63 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { Rings } from "react-loader-spinner";
 import "./index.css";
 
-const blogsList = [
-  {
-    id: 1,
-    title: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
-    desc: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. A possimus excepturi aliquid nihil cumque ipsam facere aperiam at! Ea dolorem ratione sit debitis deserunt repellendus numquam ab vel perspiciatis corporis!",
-    img: "https://images.pexels.com/photos/7008010/pexels-photo-7008010.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-  },
-  {
-    id: 2,
-    title: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
-    desc: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. A possimus excepturi aliquid nihil cumque ipsam facere aperiam at! Ea dolorem ratione sit debitis deserunt repellendus numquam ab vel perspiciatis corporis!",
-    img: "https://images.pexels.com/photos/6489663/pexels-photo-6489663.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-  },
-];
+const apiStatusConstants = {
+  initial: "INITIAL",
+  success: "SUCCESS",
+  failure: "FAILURE",
+  inProgress: "IN_PROGRESS",
+};
 
 const AllBlogs = () => {
-  return (
-    <div className="home">
+  const [blogsList, setBlogsList] = useState([]);
+  const [apiStatus, setApiStatus] = useState(apiStatusConstants.initial);
+
+  // Fetch blogs from the backend API
+  const fetchBlogs = async () => {
+    setApiStatus(apiStatusConstants.inProgress);
+    try {
+      const response = await fetch("http://localhost:3001/blogs");
+      if (response.ok) {
+        const data = await response.json();
+        if (data.length > 0) {
+          setBlogsList(data);
+          setApiStatus(apiStatusConstants.success);
+        } 
+      } 
+    } catch (error) {
+      console.error("Error fetching blogs:", error);
+      setApiStatus(apiStatusConstants.failure);
+    }
+  };
+
+  useEffect(() => {
+    fetchBlogs();
+  }, []);
+  
+  const renderLoadingView = () => (
+    <div className="blogs-loader-container">
+      <Rings color="#0b69ff" height={50} width={50} />
+    </div>
+  );
+  
+  const renderFailureView = () => (
+    <div className="blogs-error-view-container">
+      <h1 className="blogs-failure-heading-text">Oops! Something Went Wrong</h1>
+      <p className="blogs-failure-description">
+        We are having some trouble processing your request. Please try again
+        later.
+      </p>
+    </div>
+  );
+  
+  const renderBlogsListView = () => (
+    <div className="blogs-container">
       {blogsList.map((blog) => (
-        <div className="post" key={blog.id}>
+        <div className="blog" key={blog.id}>
           <Link className="link" to={`/blog/${blog.id}`}>
-            <div>
-              <img className="img" src={blog.img} alt="" />
-            </div>
-            <div className="content">
+            <div className="blog-content">
               <h1>{blog.title}</h1>
               <p>{blog.desc}</p>
               <button>Read More</button>
@@ -36,6 +67,21 @@ const AllBlogs = () => {
       ))}
     </div>
   );
+  
+  const renderAllBlogs = () => {
+    switch (apiStatus) {
+      case apiStatusConstants.success:
+        return renderBlogsListView();
+      case apiStatusConstants.failure:
+        return renderFailureView();
+      case apiStatusConstants.inProgress:
+        return renderLoadingView();
+      default:
+        return null;
+    }
+  };
+
+  return <div className="all-blogs-section">{renderAllBlogs()}</div>;
 };
 
 export default AllBlogs;

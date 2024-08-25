@@ -5,10 +5,10 @@ import "./index.css";
 const Navbar = () => {
   return (
     <div className="navbar">
-      <h1>
-        <Link to="/">ZuAI</Link>
-      </h1>
-      <span>Jhon</span>
+      <Link to="/" className="logo-link">
+        <h1 className="logo">.blog</h1>
+      </Link>
+      
       <Link to="/upload">
         <button>Upload Blog</button>
       </Link>

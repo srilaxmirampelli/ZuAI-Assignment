@@ -3,5 +3,14 @@
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  background-color: aquamarine;
+  border: 1px solid transparent;
+  box-shadow: 0 3px 2px -2px gray;
+}
+.logo-link {
+  text-decoration: none;
+  color: none;
+}
+.logo {
+  text-decoration: none;
+  color: teal;
 }
