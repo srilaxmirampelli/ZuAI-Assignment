@@ -22,6 +22,7 @@ const Blog = () => {
         }
         const blogData = await response.json();
         setBlog(blogData);
+        console.log(blogData)
       } catch (error) {
         setError(error.message);
         console.error("Error fetching blog:", error);
@@ -34,7 +35,9 @@ const Blog = () => {
   }, [id]);
 
   const handleDelete = async () => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this blog?");
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this blog?"
+    );
     if (confirmDelete) {
       try {
         await axios.delete(`http://localhost:3001/blog/${id}`);
@@ -53,8 +56,11 @@ const Blog = () => {
 
   return (
     <div className="blog-container">
-      <h1>{blog.title}</h1>
-      <p>{blog.content}</p>
+      <img src={blog.image} alt={blog.title} className="blog-image"/>
+      <h1 className="blog-title">{blog.title}</h1>
+      <p className="blog-content">{blog.content}</p>
+      <p>{blog.description}</p>
+      <p>{blog.created_at}</p>
       <div className="blog-actions">
         <Link to={`/upload/${blog.id}`}>
           <FaEdit className="icon" />

@@ -2,17 +2,24 @@ const db = require("../database");
 
 // Create a new post
 exports.createPost = (req, res) => {
-  const { title, content} = req.body;
-  console.log(title, content);
+  const { title, content, image, description } = req.body;
+  console.log(title, content, image, description);
 
   db.run(
-    "INSERT INTO blogs (title, content) VALUES (?, ?)",
-    [title, content],
+    "INSERT INTO blogs (title, content, image, description) VALUES (?, ?, ?, ?)",
+    [title, content, image, description],
     function (err) {
       if (err) {
         return res.status(500).send("Error creating post");
       }
-      res.status(201).json({ id: this.lastID, title, content});
+      res.status(201).json({
+        id: this.lastID,
+        title,
+        content,
+        image,
+        description,
+        created_at: new Date(),
+      });
     }
   );
 };
@@ -44,7 +51,7 @@ exports.getPostById = (req, res) => {
 // Update a post by ID
 exports.updatePost = (req, res) => {
   const { id } = req.params;
-  const { title, content} = req.body;
+  const { title, content } = req.body;
   db.run(
     "UPDATE blogs SET title = ?, content = ? WHERE id = ?",
     [title, content, id],

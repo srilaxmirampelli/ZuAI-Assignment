@@ -8,9 +8,9 @@ const Navbar = () => {
       <Link to="/" className="logo-link">
         <h1 className="logo">.blog</h1>
       </Link>
-      
+
       <Link to="/upload">
-        <button>Upload Blog</button>
+        <button className="upload-button">Upload Blog</button>
       </Link>
     </div>
   );

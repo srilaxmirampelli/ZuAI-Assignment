@@ -1,0 +1,23 @@
+.detailed-blog {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    
+  }
+  
+  .blog-image {
+    width: 420px;
+    height: 450px;
+  }
+  .blog-content {
+    width: 420px;
+  }
+  
+  .icon {
+    cursor: pointer;
+    font-size: 30px;
+  }
+  

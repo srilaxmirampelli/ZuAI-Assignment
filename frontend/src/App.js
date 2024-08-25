@@ -1,12 +1,9 @@
 import { RouterProvider, createBrowserRouter, Outlet } from "react-router-dom";
-import Login from "./components/Login";
-import Register from "./components/Register";
 import AllBlogs from "./components/AllBlogs";
 import Blog from "./components/Blog";
 import UploadBlog from "./components/UploadBlog";
-import UpdateBlog from "./components/UpdateBlog"; // New component
+import UpdateBlog from "./components/UpdateBlog";
 import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
 import "./App.css";
 
 const Layout = () => {
@@ -14,7 +11,6 @@ const Layout = () => {
     <>
       <Navbar />
       <Outlet />
-      <Footer />
     </>
   );
 };
@@ -38,17 +34,9 @@ const router = createBrowserRouter([
       },
       {
         path: "/upload/:id",
-        element: <UpdateBlog />, // Route for updating blog
+        element: <UpdateBlog />,
       },
     ],
-  },
-  {
-    path: "/register",
-    element: <Register />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
   },
 ]);
 

@@ -14,3 +14,11 @@
   text-decoration: none;
   color: teal;
 }
+.upload-button {
+  background-color: teal;
+  color: white;
+  font-size: 20px;
+  border: none;
+  padding: 15px;
+  cursor: pointer;
+}

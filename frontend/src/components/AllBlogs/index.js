@@ -24,8 +24,8 @@ const AllBlogs = () => {
         if (data.length > 0) {
           setBlogsList(data);
           setApiStatus(apiStatusConstants.success);
-        } 
-      } 
+        }
+      }
     } catch (error) {
       console.error("Error fetching blogs:", error);
       setApiStatus(apiStatusConstants.failure);
@@ -35,13 +35,13 @@ const AllBlogs = () => {
   useEffect(() => {
     fetchBlogs();
   }, []);
-  
+
   const renderLoadingView = () => (
     <div className="blogs-loader-container">
       <Rings color="#0b69ff" height={50} width={50} />
     </div>
   );
-  
+
   const renderFailureView = () => (
     <div className="blogs-error-view-container">
       <h1 className="blogs-failure-heading-text">Oops! Something Went Wrong</h1>
@@ -51,23 +51,24 @@ const AllBlogs = () => {
       </p>
     </div>
   );
-  
+
   const renderBlogsListView = () => (
     <div className="blogs-container">
       {blogsList.map((blog) => (
         <div className="blog" key={blog.id}>
-          <Link className="link" to={`/blog/${blog.id}`}>
-            <div className="blog-content">
+          <img src={blog.image} alt={blog.title} />
+          <div className="blog-content">
+            <Link className="link" to={`/blog/${blog.id}`}>
               <h1>{blog.title}</h1>
-              <p>{blog.desc}</p>
+              <p>{blog.content}</p>
               <button>Read More</button>
-            </div>
-          </Link>
+            </Link>
+          </div>
         </div>
       ))}
     </div>
   );
-  
+
   const renderAllBlogs = () => {
     switch (apiStatus) {
       case apiStatusConstants.success:
